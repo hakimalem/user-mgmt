@@ -13,7 +13,7 @@ model User {
   lastName   String
   username   String    @unique
   email      String    @unique
-  phone      String    @unique
+  phone      String    @unique 
   password   String
   isActive   Boolean   @default(true)
   posteId    Int
@@ -51,9 +51,11 @@ model PosteRoles {
 
 
 model ExtraUserRole {
-  id     Int  @id @default(autoincrement())
-  userId Int
-  roleId Int
+  id        Int  @id @default(autoincrement())
+  userId    Int
+  roleId    Int
+  createdBy Int
+
   // Relations
   user   User @relation(fields: [userId], references: [id])
   role   Role @relation(fields: [roleId], references: [id])

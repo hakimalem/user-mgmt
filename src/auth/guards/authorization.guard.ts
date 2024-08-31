@@ -9,6 +9,7 @@ import { Cache } from 'cache-manager';
 import { DatabaseService } from 'src/database/database.service';
 import { ROLES_KEY } from 'src/decorators/roles.decorator';
 import { UserWithRoles } from 'src/types';
+import { getAllRoles } from 'src/utils/getroles';
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
@@ -47,7 +48,11 @@ export class AuthorizationGuard implements CanActivate {
       return false;
     }
 
-    const allRoles = await this.getAllRoles(userId, user.posteId);
+    const allRoles = await getAllRoles(
+      this.databaseService,
+      userId,
+      user.posteId,
+    );
 
     await this.cacheManager.set(`user-${employeeId}`, { ...user, allRoles });
 
@@ -71,23 +76,6 @@ export class AuthorizationGuard implements CanActivate {
       createdBy: true,
       companyId: true,
     };
-  }
-
-  private async getAllRoles(
-    userId: number,
-    posteId: number,
-  ): Promise<string[]> {
-    const postRoles = await this.databaseService.role.findMany({
-      where: { posteRoles: { some: { posteId } } },
-      select: { name: true },
-    });
-
-    const extraRoles = await this.databaseService.role.findMany({
-      where: { extraUsers: { some: { userId } } },
-      select: { name: true },
-    });
-
-    return [...new Set([...postRoles, ...extraRoles].map((role) => role.name))];
   }
 
   private hasRequiredRole(

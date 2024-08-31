@@ -2,13 +2,16 @@ import { Injectable } from '@nestjs/common';
 
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
+import { CreatePosteRolesDTO } from './dto/createPosteRolesDTO';
+import { UpdatePosteRolesDTO } from './dto/updatePosteRolesDTO';
 
 @Injectable()
 export class PosterolesService {
   constructor(private readonly databaseService: DatabaseService) {}
-  create(createPosteroleDto: Prisma.PosteRolesCreateInput) {
+  create(createPosteroleDto: CreatePosteRolesDTO, request) {
+    const createdBy = request.user.userId;
     return this.databaseService.posteRoles.create({
-      data: createPosteroleDto,
+      data: { ...createPosteroleDto, createdBy },
     });
   }
 
@@ -22,7 +25,7 @@ export class PosterolesService {
     });
   }
 
-  update(id: number, updatePosteroleDto: Prisma.PosteRolesUpdateInput) {
+  update(id: number, updatePosteroleDto: UpdatePosteRolesDTO) {
     return this.databaseService.posteRoles.update({
       where: { id },
       data: updatePosteroleDto,

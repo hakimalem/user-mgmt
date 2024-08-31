@@ -12,7 +12,6 @@ import { AuthGuard } from './guards/authentication.guard';
 import { BaseController } from 'src/utils/base.controller';
 import { AuthorizationGuard } from './guards/authorization.guard';
 import { Roles } from 'src/decorators/roles.decorator';
-import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @Controller('auth')
 export class AuthController extends BaseController {
@@ -29,8 +28,7 @@ export class AuthController extends BaseController {
     return this.authService.refreshAccessToken(refreshToken);
   }
 
-  @Roles(['admin', 'manager'])
-  @UseGuards(AuthGuard, AuthorizationGuard)
+  @UseGuards(AuthGuard)
   @Get('me')
   getUserInfo(@Request() request) {
     return request.user;

@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
+import { CreateExtraUserRoleDTO } from './dto/createExtraUserRoleDTO';
+import { UpdateExtraUserRoleDTO } from './dto/updateExtraUserRoleDTO';
 
 @Injectable()
 export class ExtraUserRoleService {
   constructor(private readonly databaseService: DatabaseService) {}
-  create(createExtraUserRoleDto: Prisma.ExtraUserRoleCreateInput) {
+  create(createExtraUserRoleDto: CreateExtraUserRoleDTO, request) {
+    const createdBy = request.user.userId;
     return this.databaseService.extraUserRole.create({
-      data: createExtraUserRoleDto,
+      data: { ...createExtraUserRoleDto, createdBy },
     });
   }
 
@@ -21,7 +24,7 @@ export class ExtraUserRoleService {
     });
   }
 
-  update(id: number, updateExtraUserRoleDto: Prisma.ExtraUserRoleUpdateInput) {
+  update(id: number, updateExtraUserRoleDto: UpdateExtraUserRoleDTO) {
     return this.databaseService.extraUserRole.update({
       where: { id },
       data: updateExtraUserRoleDto,

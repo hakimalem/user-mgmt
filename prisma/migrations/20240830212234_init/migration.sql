@@ -51,6 +51,7 @@ CREATE TABLE `ExtraUserRole` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
     `roleId` INTEGER NOT NULL,
+    `createdBy` INTEGER NOT NULL,
 
     UNIQUE INDEX `ExtraUserRole_userId_roleId_key`(`userId`, `roleId`),
     PRIMARY KEY (`id`)

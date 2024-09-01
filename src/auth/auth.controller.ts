@@ -5,7 +5,6 @@ import {
   Post,
   Request,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './guards/authentication.guard';
@@ -18,6 +17,7 @@ export class AuthController extends BaseController {
   constructor(private authService: AuthService) {
     super();
   }
+
   @Post('login')
   login(@Body() input: { login: string; password: string }) {
     return this.authService.authenticate(input.login, input.password);

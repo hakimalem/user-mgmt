@@ -5,6 +5,8 @@ import { access } from 'fs';
 import { UserService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt'; // Import bcrypt
 import e from 'express';
+import { getAllRoles } from 'src/utils/getroles';
+import { DatabaseService } from 'src/database/database.service';
 
 type SignInData = {
   id: number;
@@ -17,6 +19,7 @@ type SignInData = {
 export class AuthService {
   constructor(
     private userService: UserService,
+    private databaseService: DatabaseService,
     private jwtService: JwtService,
   ) {}
 
@@ -53,8 +56,20 @@ export class AuthService {
     const refreshToken = await this.jwtService.signAsync(payload, {
       expiresIn: '7d',
     });
+    const roles = await getAllRoles(
+      this.databaseService,
+      user.id,
+      user.posteId,
+    );
 
-    return { accessToken, refreshToken, email: user.email, id: user.id };
+    return {
+      accessToken,
+      employeeId: user.employeeId,
+      employeeName: `${user.firstName} ${user.lastName}`,
+      userId: user.id,
+      agenceId: user.agenceId,
+      roles,
+    };
   }
 
   async refreshAccessToken(refreshToken: string): Promise<any> {

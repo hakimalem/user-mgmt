@@ -2,15 +2,11 @@ import { HttpStatus } from '@nestjs/common';
 import { CustomHttpException } from './CustomHttpException';
 
 export class BaseController {
-  protected sendSuccessResponse(message: string, data?: any) {
-    return { message, data: data ?? null };
+  protected sendSuccessResponse(data?: any) {
+    return { success: true, data: data ?? null };
   }
 
-  protected sendErrorResponse(
-    message: string,
-    status: HttpStatus,
-    errors?: Record<string, any>,
-  ) {
-    throw new CustomHttpException(message, status, errors ?? null);
+  protected sendErrorResponse(error: string, status: HttpStatus) {
+    throw new CustomHttpException(false, error, status);
   }
 }

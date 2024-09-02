@@ -40,7 +40,7 @@ export class PosterolesController extends BaseController {
         createPosteroleDto,
         request,
       );
-      return super.sendSuccessResponse('Postrole created successfully', result);
+      return super.sendSuccessResponse(result);
     } catch (error) {
       if (error.code === 'P2002') {
         return super.sendErrorResponse('Postrole already exists', 400);
@@ -55,10 +55,7 @@ export class PosterolesController extends BaseController {
   async findAll() {
     try {
       const data = await this.posterolesService.findAll();
-      return super.sendSuccessResponse(
-        'Postroles retrieved successfully',
-        data,
-      );
+      return super.sendSuccessResponse(data);
     } catch (error) {
       return super.sendErrorResponse(
         'Failed to retrieve postroles',
@@ -71,7 +68,7 @@ export class PosterolesController extends BaseController {
   async findOne(@Param('id') id: string) {
     try {
       const data = await this.posterolesService.findOne(+id);
-      return super.sendSuccessResponse('Postrole retrieved successfully', data);
+      return super.sendSuccessResponse(data);
     } catch (error) {
       return super.sendErrorResponse(
         'Failed to retrieve postrole',
@@ -87,7 +84,7 @@ export class PosterolesController extends BaseController {
   ) {
     try {
       const data = await this.posterolesService.update(+id, updatePosteroleDto);
-      return super.sendSuccessResponse('Postrole updated successfully', data);
+      return super.sendSuccessResponse(data);
     } catch (error) {
       return super.sendErrorResponse('Failed to update postrole', 400);
     }
@@ -97,7 +94,7 @@ export class PosterolesController extends BaseController {
   async remove(@Param('id') id: string) {
     try {
       const data = await this.posterolesService.remove(+id);
-      return super.sendSuccessResponse('Postrole removed successfully', data);
+      return super.sendSuccessResponse(data);
     } catch (error) {
       return super.sendErrorResponse('Failed to remove postrole', 400);
     }

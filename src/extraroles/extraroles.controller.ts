@@ -40,10 +40,7 @@ export class ExtraUserRoleController extends BaseController {
         createExtraUserRoleDto,
         request,
       );
-      return super.sendSuccessResponse(
-        'Extra user role created successfully',
-        result,
-      );
+      return super.sendSuccessResponse(result);
     } catch (error) {
       if (error.code === 'P2002') {
         return super.sendErrorResponse('Extrarole already exists', 400);
@@ -56,10 +53,7 @@ export class ExtraUserRoleController extends BaseController {
   async findAll() {
     try {
       const extraUserRoles = await this.extraUserRoleService.findAll();
-      return super.sendSuccessResponse(
-        'Extra user roles fetched successfully',
-        extraUserRoles,
-      );
+      return super.sendSuccessResponse(extraUserRoles);
     } catch (error) {
       return super.sendErrorResponse('Failed to fetch extra user roles', 500);
     }
@@ -69,10 +63,7 @@ export class ExtraUserRoleController extends BaseController {
   async findOne(@Param('id') id: string) {
     try {
       const extraUserRole = await this.extraUserRoleService.findOne(+id);
-      return super.sendSuccessResponse(
-        'Extra user role retrieved successfully',
-        extraUserRole,
-      );
+      return super.sendSuccessResponse(extraUserRole);
     } catch (error) {
       return super.sendErrorResponse('Failed to retrieve extra user role', 404);
     }
@@ -88,10 +79,7 @@ export class ExtraUserRoleController extends BaseController {
         +id,
         updateExtraUserRoleDto,
       );
-      return super.sendSuccessResponse(
-        'Extra user role updated successfully',
-        updatedExtraUserRole,
-      );
+      return super.sendSuccessResponse(updatedExtraUserRole);
     } catch (error) {
       return super.sendErrorResponse('Failed to update extra user role', 400);
     }
@@ -101,10 +89,7 @@ export class ExtraUserRoleController extends BaseController {
   async remove(@Param('id') id: string) {
     try {
       const result = await this.extraUserRoleService.remove(+id);
-      return super.sendSuccessResponse(
-        'Extra user role removed successfully',
-        result,
-      );
+      return super.sendSuccessResponse(result);
     } catch (error) {
       return super.sendErrorResponse('Failed to remove extra user role', 400);
     }

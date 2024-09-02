@@ -19,8 +19,13 @@ export class AuthController extends BaseController {
   }
 
   @Post('login')
-  login(@Body() input: { login: string; password: string }) {
-    return this.authService.authenticate(input.login, input.password);
+  async login(@Body() input: { login: string; password: string }) {
+    const data = await this.authService.authenticate(
+      input.login,
+      input.password,
+    );
+    if (!data) return super.sendErrorResponse('Invalid credentials', 400);
+    return super.sendSuccessResponse(data);
   }
 
   @Post('refresh-token')

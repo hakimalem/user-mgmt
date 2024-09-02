@@ -33,7 +33,7 @@ export class RolesController extends BaseController {
   async create(@Body() createRoleDto: CreateRoleDTO, @Req() request: Request) {
     try {
       const newRole = await this.rolesService.create(createRoleDto, request);
-      return super.sendSuccessResponse('Role created successfully', newRole);
+      return super.sendSuccessResponse(newRole);
     } catch (error) {
       console.log(error);
       if (error.code === 'P2002') {
@@ -47,7 +47,7 @@ export class RolesController extends BaseController {
   async findAll() {
     try {
       const roles = await this.rolesService.findAll();
-      return super.sendSuccessResponse('Roles fetched successfully', roles);
+      return super.sendSuccessResponse(roles);
     } catch (error) {
       return super.sendErrorResponse('Failed to fetch roles', 500);
     }
@@ -57,7 +57,7 @@ export class RolesController extends BaseController {
   async findOne(@Param('id') id: string) {
     try {
       const role = await this.rolesService.findOne(+id);
-      return super.sendSuccessResponse('Role retrieved successfully', role);
+      return super.sendSuccessResponse(role);
     } catch (error) {
       return super.sendErrorResponse('Failed to retrieve role', 404);
     }
@@ -68,10 +68,7 @@ export class RolesController extends BaseController {
   async update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDTO) {
     try {
       const updatedRole = await this.rolesService.update(+id, updateRoleDto);
-      return super.sendSuccessResponse(
-        'Role updated successfully',
-        updatedRole,
-      );
+      return super.sendSuccessResponse(updatedRole);
     } catch (error) {
       return super.sendErrorResponse('Failed to update role', 400);
     }
@@ -81,7 +78,7 @@ export class RolesController extends BaseController {
   async remove(@Param('id') id: string) {
     try {
       const result = await this.rolesService.remove(+id);
-      return super.sendSuccessResponse('Role removed successfully', result);
+      return super.sendSuccessResponse(result);
     } catch (error) {
       return super.sendErrorResponse('Failed to remove role', 400);
     }

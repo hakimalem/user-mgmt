@@ -38,10 +38,7 @@ export class AuthService {
 
   async authenticate(login: string, password: string): Promise<any> {
     const user = await this.validateUser(login, password);
-    if (user) {
-      return this.signIn(user);
-    }
-    throw new UnauthorizedException();
+    if (user) return this.signIn(user);
   }
 
   async signIn(user: User) {

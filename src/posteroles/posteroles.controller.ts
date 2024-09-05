@@ -10,6 +10,7 @@ import {
   UseGuards,
   UsePipes,
   ValidationPipe,
+  Put,
 } from '@nestjs/common';
 import { PosterolesService } from './posteroles.service';
 import { Prisma } from '@prisma/client';
@@ -77,7 +78,7 @@ export class PosterolesController extends BaseController {
     }
   }
 
-  @Patch(':id')
+  @Put(':id')
   async update(
     @Param('id') id: string,
     @Body() updatePosteroleDto: UpdatePosteRolesDTO,

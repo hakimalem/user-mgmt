@@ -10,6 +10,7 @@ import {
   ValidationPipe,
   UseGuards,
   Req,
+  Put,
 } from '@nestjs/common';
 import { RolesService } from './roles.service';
 import { Prisma } from '@prisma/client';
@@ -63,7 +64,7 @@ export class RolesController extends BaseController {
     }
   }
 
-  @Patch(':id')
+  @Put(':id')
   @UsePipes(ValidationPipe)
   async update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDTO) {
     try {

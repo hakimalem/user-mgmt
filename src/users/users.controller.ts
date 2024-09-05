@@ -12,6 +12,7 @@ import {
   UsePipes,
   ValidationPipe,
   Req,
+  Put,
 } from '@nestjs/common';
 import { UserService } from './users.service';
 import { Prisma } from '@prisma/client';
@@ -77,7 +78,7 @@ export class UserController extends BaseController {
     }
   }
 
-  @Patch(':id')
+  @Put(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDTO) {
     try {
       const updatedUser = await this.userService.update(+id, updateUserDto);

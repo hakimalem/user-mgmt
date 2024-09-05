@@ -10,6 +10,7 @@ import {
   ValidationPipe,
   UsePipes,
   Req,
+  Put,
 } from '@nestjs/common';
 import { ExtraUserRoleService } from './extraroles.service';
 import { Prisma } from '@prisma/client';
@@ -69,7 +70,7 @@ export class ExtraUserRoleController extends BaseController {
     }
   }
 
-  @Patch(':id')
+  @Put(':id')
   async update(
     @Param('id') id: string,
     @Body() updateExtraUserRoleDto: UpdateExtraUserRoleDTO,

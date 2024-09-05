@@ -42,22 +42,22 @@ export class AuthService {
   }
 
   async signIn(user: User) {
-    const payload = {
-      email: user.email,
-      sub: user.id,
-      agenceId: user.agenceId,
-      posteId: user.posteId,
-      employeeId: user.employeeId,
-    };
-    const accessToken = await this.jwtService.signAsync(payload);
-    const refreshToken = await this.jwtService.signAsync(payload, {
-      expiresIn: '7d',
-    });
     const roles = await getAllRoles(
       this.databaseService,
       user.id,
       user.posteId,
     );
+    const payload = {
+      sub: user.id,
+      agenceId: user.agenceId,
+      employeeId: user.employeeId,
+      employeeName: `${user.firstName} ${user.lastName}`,
+      roles,
+    };
+    const accessToken = await this.jwtService.signAsync(payload);
+    const refreshToken = await this.jwtService.signAsync(payload, {
+      expiresIn: '7d',
+    });
 
     return {
       accessToken,
@@ -79,11 +79,11 @@ export class AuthService {
       }
 
       const newAccessToken = await this.jwtService.signAsync({
-        email: user.email,
         sub: user.id,
         agenceId: user.agenceId,
-        posteId: user.posteId,
         employeeId: user.employeeId,
+        employeeName: `${user.firstName} ${user.lastName}`,
+        roles: await getAllRoles(this.databaseService, user.id, user.posteId),
       });
 
       return { accessToken: newAccessToken };

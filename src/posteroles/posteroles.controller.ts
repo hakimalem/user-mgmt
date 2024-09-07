@@ -43,9 +43,6 @@ export class PosterolesController extends BaseController {
       );
       return super.sendSuccessResponse(result);
     } catch (error) {
-      if (error.code === 'P2002') {
-        return super.sendErrorResponse('Postrole already exists', 400);
-      }
       return super.sendErrorResponse('Failed to create postrole', 500);
     }
   }

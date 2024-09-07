@@ -8,13 +8,25 @@ import { UpdatePosteRolesDTO } from './dto/updatePosteRolesDTO';
 @Injectable()
 export class PosterolesService {
   constructor(private readonly databaseService: DatabaseService) {}
-  create(createPosteroleDto: CreatePosteRolesDTO, request) {
+  async create(createPosteroleDto: CreatePosteRolesDTO, request) {
     const createdBy = request.user.userId;
-    return this.databaseService.posteRoles.create({
-      data: { ...createPosteroleDto, createdBy },
+
+    const data = createPosteroleDto.roleId.map((roleId) => ({
+      roleId,
+      posteId: createPosteroleDto.posteId,
+      createdBy,
+    }));
+
+    return this.databaseService.$transaction(async (transaction) => {
+      await transaction.posteRoles.deleteMany({
+        where: { posteId: createPosteroleDto.posteId },
+      });
+
+      return transaction.posteRoles.createMany({
+        data,
+      });
     });
   }
-
   findAll() {
     return this.databaseService.posteRoles.findMany();
   }

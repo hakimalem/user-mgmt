@@ -8,13 +8,9 @@ import {
   IsArray,
 } from 'class-validator';
 export class CreatePosteRolesDTO {
-  @IsInt()
-  roleId: number;
+  @IsArray()
+  roleId: number[];
 
   @IsInt()
   posteId: number;
-
-  @IsBoolean()
-  @IsOptional()
-  isActive?: boolean;
 }

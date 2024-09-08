@@ -1,8 +1,8 @@
-import { IsInt } from 'class-validator';
+import { IsArray, IsInt } from 'class-validator';
 export class CreateExtraUserRoleDTO {
-  @IsInt()
-  userId: number;
+  @IsArray()
+  roleId: number[];
 
   @IsInt()
-  roleId: number;
+  userId: number;
 }

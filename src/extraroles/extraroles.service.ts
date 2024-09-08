@@ -7,10 +7,23 @@ import { UpdateExtraUserRoleDTO } from './dto/updateExtraUserRoleDTO';
 @Injectable()
 export class ExtraUserRoleService {
   constructor(private readonly databaseService: DatabaseService) {}
-  create(createExtraUserRoleDto: CreateExtraUserRoleDTO, request) {
+  async create(createExtraUserRoleDTO: CreateExtraUserRoleDTO, request) {
     const createdBy = request.user.userId;
-    return this.databaseService.extraUserRole.create({
-      data: { ...createExtraUserRoleDto, createdBy },
+
+    const data = createExtraUserRoleDTO.roleId.map((roleId) => ({
+      roleId,
+      userId: createExtraUserRoleDTO.userId,
+      createdBy,
+    }));
+
+    return this.databaseService.$transaction(async (transaction) => {
+      await transaction.extraUserRole.deleteMany({
+        where: { userId: createExtraUserRoleDTO.userId },
+      });
+
+      return transaction.extraUserRole.createMany({
+        data,
+      });
     });
   }
 

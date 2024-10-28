@@ -23,6 +23,8 @@ model User {
   createdBy  Int
   companyId  Int
   employeeId Int
+  deletedAt  DateTime? 
+
   // Relations
   extraRoles      ExtraUserRole[]
 }

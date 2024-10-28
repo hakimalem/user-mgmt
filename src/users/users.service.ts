@@ -26,6 +26,7 @@ export class UserService {
   async findAll() {
     const users = await this.databaseService.user.findMany({
       select: this.getUserSelection(),
+      where: { deletedAt: null },
     });
 
     return users;
@@ -33,37 +34,40 @@ export class UserService {
 
   async findOne(id: number) {
     return this.databaseService.user.findUnique({
-      where: { id },
+      where: { id, deletedAt: null },
       select: this.getUserSelection(),
     });
   }
 
   async update(id: number, updateUserDto: UpdateUserDTO) {
     return this.databaseService.user.update({
-      where: { id },
+      where: { id, deletedAt: null },
       data: updateUserDto,
     });
   }
 
   async remove(id: number) {
-    return this.databaseService.user.delete({ where: { id } });
+    return this.databaseService.user.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
   }
 
   async findUserByEmail(login: string) {
     return this.databaseService.user.findUnique({
-      where: { email: login },
+      where: { email: login, deletedAt: null },
     });
   }
 
   async findUserByUsername(login: string) {
     return this.databaseService.user.findUnique({
-      where: { username: login },
+      where: { username: login, deletedAt: null },
     });
   }
 
   async findUserByPhone(login: string) {
     return this.databaseService.user.findUnique({
-      where: { phone: login },
+      where: { phone: login, deletedAt: null },
     });
   }
 
@@ -83,6 +87,7 @@ export class UserService {
       updatedAt: true,
       createdBy: true,
       companyId: true,
+      deletedAt: true,
     };
   }
 }

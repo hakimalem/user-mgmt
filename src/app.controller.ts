@@ -7,7 +7,7 @@ import { Response, Request } from 'express';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('/')
+  @Get('*')
   async serveFrontend(@Req() req: Request, @Res() res: Response) {
     const path = req.path;
     const buildPath = join(__dirname, '..', 'build');
@@ -17,7 +17,7 @@ export class AppController {
       res.sendFile(join(buildPath, path));
     }
     // Serve index.html for non-API routes
-    else if (!path.startsWith('/api') && !path.startsWith('/user')) {
+    else if (!path.startsWith('/api')) {
       res.sendFile(join(buildPath, 'index.html')); // Update the path to your CRA build folder
     }
   }

@@ -10,6 +10,8 @@ export class AppController {
   @Get('*')
   async serveFrontend(@Req() req: Request, @Res() res: Response) {
     const path = req.path;
+    console.log('path', path);
+
     const buildPath = join(__dirname, '..', 'build');
 
     // Serve static files if the path starts with /assets or /static

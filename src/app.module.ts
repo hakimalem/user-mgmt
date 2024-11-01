@@ -11,6 +11,11 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { UserController } from './users/users.controller';
+import { AuthController } from './auth/auth.controller';
+import { RolesController } from './roles/roles.controller';
+import { PosterolesController } from './posteroles/posteroles.controller';
+import { ExtraUserRoleController } from './extraroles/extraroles.controller';
 
 @Module({
   imports: [
@@ -34,7 +39,16 @@ import { join } from 'path';
       }),
     }),
   ],
-  controllers: [AppController],
+  controllers: [
+    // Register other controllers first
+    UserController,
+    AuthController,
+    RolesController,
+    PosterolesController,
+    ExtraUserRoleController,
+    // Register AppController last
+    AppController,
+  ],
   providers: [AppService],
 })
 export class AppModule {}

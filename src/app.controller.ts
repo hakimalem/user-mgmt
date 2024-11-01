@@ -12,10 +12,17 @@ export class AppController {
     const path = req.path;
     const buildPath = join(__dirname, '..', 'build');
 
+    // Serve static files if the path starts with /assets or /static
     if (path.startsWith('/assets') || path.startsWith('/static')) {
       res.sendFile(join(buildPath, path));
-    } else {
+    }
+    // Serve index.html for non-API routes
+    else if (!path.startsWith('/api') && !path.startsWith('/user')) {
       res.sendFile(join(buildPath, 'index.html')); // Update the path to your CRA build folder
+    }
+    // For API routes, return 404 if not found
+    else {
+      res.status(404).send('Not Found');
     }
   }
 }

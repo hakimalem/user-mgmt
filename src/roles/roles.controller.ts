@@ -24,7 +24,7 @@ import { BaseController } from 'src/utils/base.controller';
 @Roles(['admin', 'manager'])
 @UseGuards(AuthGuard, AuthorizationGuard)
 @UsePipes(ValidationPipe)
-@Controller('roles')
+@Controller('api/roles')
 export class RolesController extends BaseController {
   constructor(private readonly rolesService: RolesService) {
     super();

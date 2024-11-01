@@ -29,7 +29,7 @@ import { Request } from 'express';
 @UsePipes(ValidationPipe)
 @Roles(['admin'])
 @UseGuards(AuthGuard, AuthorizationGuard)
-@Controller('user')
+@Controller('api/user')
 export class UserController extends BaseController {
   constructor(private readonly userService: UserService) {
     super();

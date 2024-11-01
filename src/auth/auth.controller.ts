@@ -12,7 +12,7 @@ import { BaseController } from 'src/utils/base.controller';
 import { AuthorizationGuard } from './guards/authorization.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController extends BaseController {
   constructor(private authService: AuthService) {
     super();

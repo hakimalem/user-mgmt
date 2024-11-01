@@ -25,7 +25,7 @@ import { UpdateExtraUserRoleDTO } from './dto/updateExtraUserRoleDTO';
 @Roles(['admin', 'manager'])
 @UseGuards(AuthGuard, AuthorizationGuard)
 @UsePipes(ValidationPipe)
-@Controller('extrarole')
+@Controller('api/extrarole')
 export class ExtraUserRoleController extends BaseController {
   constructor(private readonly extraUserRoleService: ExtraUserRoleService) {
     super();

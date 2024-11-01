@@ -25,7 +25,7 @@ import { BaseController } from 'src/utils/base.controller';
 @Roles(['admin', 'manager'])
 @UseGuards(AuthGuard, AuthorizationGuard)
 @UsePipes(ValidationPipe)
-@Controller('posteroles')
+@Controller('api/posteroles')
 export class PosterolesController extends BaseController {
   constructor(private readonly posterolesService: PosterolesService) {
     super();

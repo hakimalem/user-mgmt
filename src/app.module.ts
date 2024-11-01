@@ -9,9 +9,15 @@ import { AuthModule } from './auth/auth.module';
 import { ExtraUserRoleModule } from './extraroles/extraroles.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'build'), // Adjust this to point to your build folder
+      serveRoot: '/', // Serve static files at the root URL
+    }),
     DatabaseModule,
     UserModule,
     RolesModule,

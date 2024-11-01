@@ -15,5 +15,6 @@ import { JwtModule } from '@nestjs/jwt';
       signOptions: { expiresIn: '1d' },
     }),
   ],
+  exports: [AuthService], // Export AuthService if it needs to be used in other modules
 })
 export class AuthModule {}

@@ -22,7 +22,7 @@ import { Request } from 'express';
 import { CreateExtraUserRoleDTO } from './dto/createExtraUserRoleDTO';
 import { UpdateExtraUserRoleDTO } from './dto/updateExtraUserRoleDTO';
 
-@Roles(['admin', 'manager'])
+@Roles(['admin'])
 @UseGuards(AuthGuard, AuthorizationGuard)
 @UsePipes(ValidationPipe)
 @Controller('api/extrarole')

@@ -21,7 +21,7 @@ import { AuthGuard } from 'src/auth/guards/authentication.guard';
 import { AuthorizationGuard } from 'src/auth/guards/authorization.guard';
 import { BaseController } from 'src/utils/base.controller';
 
-@Roles(['admin', 'manager'])
+@Roles(['admin'])
 @UseGuards(AuthGuard, AuthorizationGuard)
 @UsePipes(ValidationPipe)
 @Controller('api/roles')

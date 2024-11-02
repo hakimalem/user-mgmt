@@ -22,7 +22,7 @@ import { AuthGuard } from 'src/auth/guards/authentication.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { BaseController } from 'src/utils/base.controller';
 
-@Roles(['admin', 'manager'])
+@Roles(['admin'])
 @UseGuards(AuthGuard, AuthorizationGuard)
 @UsePipes(ValidationPipe)
 @Controller('api/posteroles')
